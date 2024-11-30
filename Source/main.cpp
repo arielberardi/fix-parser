@@ -23,7 +23,6 @@ void onNewOrderSingle(const std::shared_ptr<FIX::NewOrderSingle> message) {
 }
 
 int main() {
-  // Code Smell, need to think how to improve this (can I find a way with templates?)
   MESSAGE_FACTORY_REGISTER(FIX::NewOrderSingle);
   MESSAGE_ACTION_REGISTER(FIX::NewOrderSingle, onNewOrderSingle);
 
@@ -39,8 +38,6 @@ int main() {
     // Create the Message Type object from factory
     auto message = FIX::MessageFactory::createMessage(msgType);
     message->parse(parser.getVector());
-
-    std::cout << &message << std::endl;
 
     // Execute action
     FIX::MessageActionsDispatcher::executeAction(msgType, message);

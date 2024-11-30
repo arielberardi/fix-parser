@@ -66,8 +66,8 @@ set(BENCH_FILES
 )
 
 foreach(bench_file ${BENCH_FILES})
-  add_executable(${bench_file} ${SOURCES} Benchmarks/${bench_file}_bench.cpp)
-  target_link_libraries(${bench_file} PRIVATE benchmark::benchmark ${LIBRARIES})
+  add_executable(${bench_file}_bench ${SOURCES} Benchmarks/${bench_file}_bench.cpp)
+  target_link_libraries(${bench_file}_bench PRIVATE benchmark::benchmark ${LIBRARIES})
 endforeach()
 
 ### BUILD TESTS ### 
@@ -91,11 +91,11 @@ set(GOOGLE_TEST_LIBS
     ubsan)
 
 foreach(test_file ${TEST_FILES})
-  add_executable(${test_file} ${SOURCES} Tests/${test_file}_test.cpp)
+  add_executable(${test_file}_test ${SOURCES} Tests/${test_file}_test.cpp)
 
-  target_compile_options(${test_file} PRIVATE -fsanitize=undefined -fsanitize=address)
-  target_link_options(${test_file} PRIVATE -fsanitize=undefined -fsanitize=address)
+  target_compile_options(${test_file}_test PRIVATE -fsanitize=undefined -fsanitize=address)
+  target_link_options(${test_file}_test PRIVATE -fsanitize=undefined -fsanitize=address)
 
-  target_link_libraries(${test_file} PRIVATE ${GOOGLE_TEST_LIBS} ${LIBRARIES})
-  gtest_discover_tests(${test_file}) 
+  target_link_libraries(${test_file}_test PRIVATE ${GOOGLE_TEST_LIBS} ${LIBRARIES})
+  gtest_discover_tests(${test_file}_test) 
 endforeach() 
